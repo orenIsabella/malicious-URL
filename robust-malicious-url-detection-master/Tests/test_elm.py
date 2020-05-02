@@ -28,6 +28,9 @@ from sklearn.model_selection import KFold
 # through the layers in one direction (forward). ELM can be configured with a single layer or multiple layers of 
 # hidden nodes, where the parameters of hidden nodes need not be tuned. These hidden nodes can be 
 # randomly assigned. We decided to use the ELM model to evaluate our results and compare them too.
+
+#features_check will contain 5 variables that will help us determine if the url is malicious or not.
+
 features_check = {
 	"base": {
 		"features"     : [1,2,3,4,5,6,7,8,9],
@@ -79,7 +82,7 @@ path               = os.path.dirname(os.path.abspath(__file__))
 features_file_name = "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"
 features_file      = os.path.join(path, features_file_name)
 
-
+#for every variable in freatures_to_check (We have 5) we will check if we can find a malicious sign. if so we will append the url to df.
 for features_set in features_to_check:
 	print("\n\nChecking features - %s" % (features_set))
 	features_file = os.path.join(path, features_check[features_set]["feature_file"])

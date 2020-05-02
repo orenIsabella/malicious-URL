@@ -27,6 +27,9 @@ from sklearn.metrics import classification_report
 # These take the form of a mathematical model which is used to process nonlinear relationships between the 
 # input, hidden and the output layers and the artificial neurons (also called the processing units) in each layer. 
 
+
+#features_check will contain 5 variables that will help us determine if the url is malicious or not.
+
 features_check = {
 	"base": {
 		"features"	   : [1,2,3,4,5,6,7,8,9],
@@ -67,6 +70,7 @@ test_size		= 0.25
 path               = os.path.dirname(os.path.abspath(__file__))
 # features_file_name = "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
 
+#for every variable in freatures_to_check (We have 5) we will check if we can find a malicious sign. if so we will append the url to df.
 for features_set in features_to_check:
 	print("\n\nChecking features - %s" % (features_set))
 	features_file = os.path.join(path, features_check[features_set]["feature_file"])

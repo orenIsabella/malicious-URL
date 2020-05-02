@@ -17,6 +17,8 @@ features_file_name = "../Datasets/features_extractions/median_9_2_(75-25)_vt_inc
 features_file      = os.path.join(path, features_file_name)
 df_features  = pd.read_csv(features_file)
 
+#features will contain 13 variables that will help us determine if the url is malicious or not.
+
 features = {
     "ld"   : 1, # Length of domain
     "ncc"  : 2, # Number of consecutive characters
