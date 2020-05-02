@@ -7,7 +7,13 @@ import random
 
 from Models.LogisticRegression import LogisticRegression
 
+# Logistic Regression (LR):
+# is a method for analyzing a dataset in which there are one or more independent 
+# variables that determine an outcome. In logistic regression, the outcome is a binary dependent variable, i.e. 
+# it only contains data coded as 1 (TRUE, malicious) or 0 (FALSE, benign). 
 
+
+#features_check will contain 5 variables that will help us determine if the url is malicious or not.
 features_check = {
 	"base": {
 		"features"	   : [1,2,3,4,5,6,7,8,9],
@@ -47,6 +53,7 @@ test_size		= 0.25
 
 path               = os.path.dirname(os.path.abspath(__file__))
 
+#for every variable in freatures_to_check (We have 5) we will check if we can find a malicious sign. if so we will append the url to df.
 for features_set in features_to_check:
 	print("\n\nChecking features - %s" % (features_set))
 	features_file = os.path.join(path, features_check[features_set]["feature_file"])
@@ -64,6 +71,10 @@ for features_set in features_to_check:
 
 	new_df = df[df.columns[use_columns]]
 	new_df = np.array(new_df.values)
+	
+	#Here is the important part of the test class.
+	#we are building the lr, training it and trying to predict if a url is malicious.
+	
 	lr = LogisticRegression(new_df, degree=degree, threshold=threshold, kfolds=n_splits, test_size=test_size)
 	lr.build()
 	lr.train()

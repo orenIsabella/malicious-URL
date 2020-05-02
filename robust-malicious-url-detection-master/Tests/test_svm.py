@@ -7,6 +7,14 @@ import random
 
 from Models.SVM import SVM
 
+# Support-Vector Machine (SVM):
+#  is a learning algorithm that constructs a high dimensional hyperplane used 
+# to solve the classification and regression problem. Given a set of training examples, and their associated 
+# labels, the algorithm trains a model that assigns new examples to one label or the other, making it a 
+# nonprobabilistic binary linear classifier. In addition to performing linear classification, SVMs can efficiently 
+# perform a non-linear classification using a kernel trick implicitly mapping their inputs into high-dimensional 
+# feature spaces. A radial basis function (RBF) is a function that assigns a real value to each input from its 
+# domain, and the value produced by the RBF is always an absolute value. 
 
 features_check = {
 	"base": {
@@ -66,7 +74,7 @@ for features_set in features_to_check:
 
 	new_df = df[df.columns[use_columns]]
 	new_df = np.array(new_df.values)
-
+# create, build, train and predict the svm
 	svm = SVM(new_df, degree=degree, threshold=threshold, kfolds=n_splits, test_size=test_size, C=coef, gamma=gamma)
 	svm.build()
 	svm.train()

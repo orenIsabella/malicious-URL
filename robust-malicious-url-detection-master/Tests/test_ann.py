@@ -22,6 +22,10 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
+# Artificial Neural Networks (ANN):
+# are computing systems that are inspired by biological neural networks. 
+# These take the form of a mathematical model which is used to process nonlinear relationships between the 
+# input, hidden and the output layers and the artificial neurons (also called the processing units) in each layer. 
 
 features_check = {
 	"base": {
@@ -80,7 +84,9 @@ for features_set in features_to_check:
 
 	new_df = df[df.columns[use_columns]]
 	new_df = np.array(new_df.values)
+	#create new neural network
 	nn     = NeuralNetwork(dataset=new_df, learning_rate=learning_rate, threshold=threshold, kfolds=n_splits, training_epochs=training_epochs, degree=degree)
+	# build the nn, train it and try to predict
 	nn.build()
 	nn.train(verbose=1)
 	scores = nn.predict()

@@ -40,7 +40,8 @@ y_column_idx = 17
 layers  = [(80,"relu"),(80,"relu"),(80,"leakyrelu"),(1,'sigmoid')]
 outputs = {}
 
-
+#we will create in the for loop below all combinations of features.
+# then we will create, build, train and try to predict with nn.
 for i in range(2,(len(features)+1)):
     combinations = list(itertools.combinations(list(features.keys()),i))
     print("Combinations:")

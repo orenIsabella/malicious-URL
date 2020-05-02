@@ -23,7 +23,11 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.model_selection import KFold
 
-
+# Extreme Learning Machines (ELM):
+#  are feed forward neural networks, which means that the data only go 
+# through the layers in one direction (forward). ELM can be configured with a single layer or multiple layers of 
+# hidden nodes, where the parameters of hidden nodes need not be tuned. These hidden nodes can be 
+# randomly assigned. We decided to use the ELM model to evaluate our results and compare them too.
 features_check = {
 	"base": {
 		"features"     : [1,2,3,4,5,6,7,8,9],
@@ -110,15 +114,18 @@ for features_set in features_to_check:
 	kf.get_n_splits(X_train)
 
 	start = time.time()
+	#create the elm
 	elm   = ELMClassifier(n_hidden=n_hidden, C= features_check[features_set]["C"], activation='relu') # activation = ['relu','tanh','logistic']
 
-	accuracies = []
+	accuracies = [] 
 	losses     = []
 	f1s        = []
 	precisions = []
 	recalls    = []
 	auc_scores = []
 
+# here we are going to test the 6 elements above. hopefully the elm can get results that are as close as possible to reality.
+# each one of the 6 elements will be tested with the result we have got and real result that we wanted to get.
 	for train_index, test_index in kf.split(idx_train):
 		X_train_fold, X_test_fold = X_train[train_index], X_train[test_index]
 		y_train_fold, y_test_fold = y_train[train_index], y_train[test_index]

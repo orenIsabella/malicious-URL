@@ -136,6 +136,7 @@ df_features = df_features[df_features.columns[use_columns]]
 elapsed_time = time.time() - start_time
 print("Preprocessing time: %s" % (time.strftime("%H:%M:%S", time.gmtime(elapsed_time))))
 
+#for each threshold build a new nn, train and predict, save the model if possible.
 for threshold in thresholds:
 	print("Using Threshold: %.2f" %(threshold))
 	start_time = time.time()
