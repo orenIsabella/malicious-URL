@@ -30,6 +30,7 @@ from sklearn.metrics import confusion_matrix
 
 class LogisticRegression:
 	def __init__(self, df, degree=1, kfolds=10, test_size=0.25, C=100, threshold=0.5, drop_columns=[]):
+		#initial parameters
 		self.df              = df
 		self.degree          = degree
 		self.kfolds          = kfolds
@@ -49,6 +50,7 @@ class LogisticRegression:
 		self.model_history	 = None
 
 	def build(self, verbose=1):
+		"""build the dataset without unwanted columns and add the features and labels to it"""
 		use_dataset = self.df.copy()
 		# Drop unwanted columns
 		if len(self.drop_columns)>0:
@@ -66,7 +68,7 @@ class LogisticRegression:
 			self.X = polynomial_features.fit_transform(self.X)
 
 
-
+	"""train the given data- first split the data to train and test, then take the train data, and lastly print the accuracy, percision and loss. """
 	def train(self, optimizer=0, verbose=0):
 		# Split the data to train and test
 		indices = np.arange(self.y.shape[0])
@@ -74,29 +76,29 @@ class LogisticRegression:
 
 		kf = KFold(n_splits=self.kfolds, random_state=None, shuffle=False)
 		kf.get_n_splits(self.X)
-
-		start      = time.time()
+		start = time.time()
 		self.model = LR_Model(solver='lbfgs', C=self.C, n_jobs=-1, max_iter=100000)
 
 		for train_index, test_index in kf.split(self.idx_train):
 			X_train_fold, X_test_fold = self.X_train[train_index], self.X_train[test_index]
 			y_train_fold, y_test_fold = self.y_train[train_index], self.y_train[test_index]
 
-			self.model.fit(X_train_fold,y_train_fold)
+			self.model.fit(X_train_fold,y_train_fold)   #Fit the model according to the given training data.
 
 			if verbose>0:
 				y_pred    = self.model.predict(X_test_fold)
 				accuracy  = accuracy_score(y_test_fold, y_pred)
 				precision = precision_score(y_test_fold, y_pred)
-				loss      = log_loss(y_test_fold, y_pred)
+				loss = log_loss(y_test_fold, y_pred) #training error: 0- if no errors >0- if there were errors
 
 				print("Accuracy {}, Precision {}, Loss {}".format(accuracy,precision,loss))
 
-		end   = time.time()
+		end = time.time()
 		print("\nTraining time:")
 		print(end - start)
 
 
+	"""after training its time to predict the outcomes and precision"""
 	def predict(self, verbose=1):
 		y_pred       = self.model.predict(self.X_test)
 		# predict probabilities for test set
@@ -140,5 +142,4 @@ class LogisticRegression:
 			print('ROC AUC: %f' % auc_score)
 			print(matrix)
 			print(cr)
-
 		return return_dict
