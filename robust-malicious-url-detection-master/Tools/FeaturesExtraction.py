@@ -2,7 +2,7 @@
 
 ##############################################
 # Author: Nitay Hason
-# Extract features from dataframe
+# Extract ` from dataframe
 ##############################################
 
 import pandas as pd
@@ -12,14 +12,16 @@ import os
 import tldextract
 import math
 import datetime
-import scipy
+import scipy.stats
 import time
 
 from calendar import timegm
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 from ast import literal_eval
+from DatasetsCollectors import vt_to_features
 
+#Definition of class constructor, initialization of all variables
 class FeaturesExtraction:
 	def __init__(self,df,countries_ratios=None,asns_ratios=None,virustotal=None,countries_threshold=-1,asns_threshold=-1,domian_idx=0,ips_idx=1,ttls_idx=2,asns_idx=3,countries_idx=4,dates_idx=6,y_idx=7,verbose=0):
 		self.countries_ratios = countries_ratios
@@ -78,14 +80,16 @@ class FeaturesExtraction:
 		self.y_idx         = y_idx
 
 
-
 	def sigmoid(self,x, bias=0):
 		return (1 / (1 + math.exp(-x)))+bias
 
 	def percentage(self, percent, whole):
-	  return (percent * whole) / 100.0
+		return (percent * whole) / 100.0
 
-	### Number of consecutive characters
+####  extracting a set of features which are commonly used for malicious URL classification
+
+	### Calculating the Number of consecutive characters in the domain
+	# Explained in thesis section 4.3 formula 4.2
 	def feature2(self, str):
 		cur_count = 1
 		count     = 0
@@ -103,7 +107,8 @@ class FeaturesExtraction:
 		return count
 
 
-	## Entropy of domain
+	## Calculating the Entropy of domain
+	# Explained in thesis section 4.3 formula 4.3
 	def feature3(self, str):
 		feature3 = 0
 		str_len  = len(str)
@@ -117,7 +122,8 @@ class FeaturesExtraction:
 
 		return (-1)*feature3
 
-	## Number of distinct countries
+	## Calculating the Number of distinct countries (Distinct Geo-locations of the IP addresses in thesis)
+	# Explained in thesis section 4.3 formula 4.5
 	def feature5(self, ips):
 		ip_bucket = []
 		countries = defaultdict(int)
@@ -132,14 +138,16 @@ class FeaturesExtraction:
 
 		return len(countries)
 
-	## Average TTL value
+	## Calculating the Average TTL value (Mean TTL value in thesis)
+	# Explained in thesis section 4.3 formula 4.6
 	def feature6(self, domain):
 		avg_ttl = np.array(self.domains_ttl[domain]["ttls"]).mean()
 		for l in self.domains_ttl[domain]["locations"]:
 			self.merged[l][6] = avg_ttl
 		return avg_ttl
 
-	## Standard Deviation of TTL
+	## Calculating the Standard Deviation of TTL
+	# Explained in thesis section 4.3 formula 4.7
 	def feature7(self, domain):
 		std_ttl = np.std(np.array(self.domains_ttl[domain]["ttls"]))
 		for l in self.domains_ttl[domain]["locations"]:
@@ -229,14 +237,17 @@ class FeaturesExtraction:
 		res = self.exist_certificate(validity["not_after"])*(not_after-not_before)
 		return res
 
+
 	def get_epoch(self, time_str):
 		return timegm(time.strptime(time_str, "%Y-%m-%d %H:%M:%S"))
+
 
 	def exist_certificate(self, time_str):
 		epoch = timegm(time.strptime(time_str, "%Y-%m-%d %H:%M:%S"))
 		cur   = timegm(time.gmtime())
 		return 1 if epoch>cur else 0
 
+##Extracting data rules
 	def extract(self):
 		x=0
 		progress=0
@@ -318,6 +329,7 @@ class FeaturesExtraction:
 		self.df_extracted = pd.DataFrame.from_dict(self.merged, "index")
 		print("\nFinish extraction")
 
+#### extracting the result to csv
 	def to_csv(self,path):
 		if self.df_extracted is not None:
 			self.df_extracted.to_csv(path, encoding='utf-8', index=False)
