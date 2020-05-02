@@ -50,6 +50,7 @@ class SVM:
 		self.model 			 = None
 		self.model_history	 = None
 
+	"""build the dataset without unwanted columns, normalize them and add the features and labels to it"""
 	def build(self, verbose=1):
 		use_dataset = self.df.copy()
 		# Drop unwanted columns
@@ -67,8 +68,7 @@ class SVM:
 			polynomial_features= PolynomialFeatures(degree=self.degree, include_bias=False)
 			self.X = polynomial_features.fit_transform(self.X)
 
-
-
+	"""train the given data- first split the data to train and test, then take the train data according to the model, and lastly print the accuracy, percision and loss. """
 	def train(self, optimizer=0, kernel='rbf', verbose=0):
 		# Split the data to train and test
 		indices = np.arange(self.y.shape[0])
@@ -98,7 +98,7 @@ class SVM:
 		print("\nTraining time:")
 		print(end - start)
 
-
+	"""after training its time to predict the outcomes and precision"""
 	def predict(self, verbose=1):
 		y_pred       = self.model.predict(self.X_test)
 		# predict probabilities for test set
