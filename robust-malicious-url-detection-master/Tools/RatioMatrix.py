@@ -9,11 +9,13 @@ import pandas as pd
 from ast import literal_eval
 
 class RatioMatrix:
+	#Definition of class constructor
 	def __init__(self, df, row_number):
 		self.df           = df
 		self.row_number   = row_number
 		self.df_extracted = None
 
+	#Extracting data(ratio matrix), which link is benign and which is malicious
 	def extract(self):
 		dictionary = {}
 		last_index = self.df.shape[1]-1
@@ -38,6 +40,7 @@ class RatioMatrix:
 		self.df_extracted["code"]            = self.df_extracted.index
 		self.df_extracted                    = self.df_extracted[["code", "benign_ratio", "malicious_ratio","benign","malicious","total"]]
 
+#Extracting to csv
 	def to_csv(self, path):
 		if self.df_extracted is not None:
 			try:
