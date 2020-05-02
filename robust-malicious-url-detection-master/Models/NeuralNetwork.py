@@ -58,6 +58,7 @@ class NeuralNetwork:
 		self.model_history	 = None
 		self.scaler    		 = None
 
+	"""get dataset from a path and set the dtype"""
 	def set_dataset(self, dataset_path=None, delimiter=',', skip_header=0, usecols=None, dtype=None):
 		if dataset_path is not None:
 			self.dataset_path = dataset_path
@@ -66,6 +67,7 @@ class NeuralNetwork:
 				dtype = np.dtype('Float64')
 			self.dataset = np.genfromtxt(dataset_path, delimiter=delimiter, skip_header=skip_header, usecols=usecols, dtype=dtype)
 
+	"""build the dataset without unwanted columns, normalize them and add the features and labels to it"""
 	def build(self, verbose=1):
 		use_dataset = self.dataset.copy()
 		# Drop unwanted columns
@@ -84,7 +86,7 @@ class NeuralNetwork:
 			polynomial_features= PolynomialFeatures(degree=self.degree, include_bias=False)
 			self.X = polynomial_features.fit_transform(self.X)
 
-
+	"""classify which layer it is and append to it the proper properties"""
 	def get_layer(self, layer, input_dim=0):
 		ret_layer = []
 		if layer[1] == "relu":
@@ -105,6 +107,8 @@ class NeuralNetwork:
 			ret_layer.append(tf.keras.layers.Dense(units=layer[0], activation='sigmoid'))
 		return ret_layer
 
+
+	"""train the data according to the logistic regression properties. and print the training time. """
 	def train(self, optimizer=0, layers=[(80,"relu"),(80,"relu"),(80,"leakyrelu"),(1,'sigmoid')], verbose=0):
 		# Split the data to train and test
 		indices = np.arange(self.y.shape[0])
@@ -148,11 +152,11 @@ class NeuralNetwork:
 		print("\nTraining time:")
 		print(end - start)
 
-
 	def predict(self, verbose=1):
 		# predict probabilities for test set
 		yhat_probs = self.model.predict(self.X_test, verbose=1)
 		return self.predict_check(yhat_probs, verbose=verbose)
+
 
 	def predict_self(self, X, threshold=None, verbose=1):
 		if threshold is None:
@@ -210,7 +214,7 @@ class NeuralNetwork:
 			print(cr)
 
 		return return_dict
-
+	"""show results visually"""
 	def plot(self):
 		# predict probabilities for test set
 		yhat_probs = self.model.predict(self.X_test, verbose=0)
@@ -245,6 +249,7 @@ class NeuralNetwork:
 		plt.legend(['Train', 'Test'], loc='upper left')
 		plt.show()
 
+	"""save the model in a file. return true if successful, false- otherwise"""
 	def save_model(self, models_name='model'):
 		model_file  = models_name+".h5"
 		scaler_file = models_name+"_scaler.sav"
@@ -255,7 +260,7 @@ class NeuralNetwork:
 			print("Saved model to disk")
 			return True
 		return False
-
+	"""load model from an existing path- return true if model file existing and loaded, false- otherwise"""
 	def load_model(self, models_name='model'):
 		model_file  = models_name+".h5"
 		scaler_file = models_name+"_scaler.sav"
