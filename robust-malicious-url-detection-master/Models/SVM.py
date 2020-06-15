@@ -29,8 +29,11 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+
 class SVM:
-	def __init__(self, df, degree=1, kfolds=10, test_size=0.25, C=100, gamma=0.00035, threshold=0.5, drop_columns=[]):
+	def __init__(self, df, degree=3, kfolds=10, test_size=0.25, C=100, gamma=0.00035, threshold=0.5, drop_columns=[]):
 		self.df              = df
 		self.degree          = degree
 		self.kfolds          = kfolds
@@ -73,6 +76,14 @@ class SVM:
 		# Split the data to train and test
 		indices = np.arange(self.y.shape[0])
 		self.X_train, self.X_test, self.y_train, self.y_test, self.idx_train, self.idx_test = train_test_split(self.X, self.y, indices, stratify=self.y, test_size=self.test_size, random_state=42)
+
+		sc_x = StandardScaler()
+		self.X_train = sc_x.fit_transform(self.X_train)
+		self.X_test = sc_x.transform(self.X_test)
+
+		mm_x = MinMaxScaler()
+		self.X_train = mm_x.fit_transform(self.X_train)
+		self.X_test = mm_x.transform(self.X_test)
 
 		kf = KFold(n_splits=self.kfolds, random_state=None, shuffle=False)
 		kf.get_n_splits(self.X)
