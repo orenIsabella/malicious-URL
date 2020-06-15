@@ -22,7 +22,8 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.model_selection import KFold
-
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 # Extreme Learning Machines (ELM):
 #  are feed forward neural networks, which means that the data only go 
 # through the layers in one direction (forward). ELM can be configured with a single layer or multiple layers of 
@@ -35,7 +36,7 @@ features_check = {
 	"base": {
 		"features"     : [1,2,3,4,5,6,7,8,9],
 		"C"            : 0.001,
-		"n_hidden"     : 50,
+		"n_hidden"     : 100,
 		"y_column_idx" : 10,
 		"feature_file" : "../Datasets/features_extractions/base_(all).csv"
 	},
@@ -71,7 +72,7 @@ features_check = {
 
 
 model_name        = "elm"
-features_to_check = ["base","base_robust","all","novel","hybrid_robust"]
+features_to_check = ["base"]
 
 threshold       = 0.5
 learning_rate   = 0.001
@@ -108,19 +109,27 @@ for features_set in features_to_check:
 
 	# Split features and labels
 	X, y = use_dataset, np.transpose([use_dataset[:, -1]])
-
 	indices = np.arange(y.shape[0])
 	X_train, X_test, y_train, y_test, idx_train, idx_test = train_test_split(X, y, indices, stratify=y, test_size=test_size, random_state=42)
 
+	sc_x = StandardScaler()
+	X_train = sc_x.fit_transform(X_train)
+	X_test = sc_x.transform(X_test)
+
+	mm_x = MinMaxScaler()
+	X_train = mm_x.fit_transform(X_train)
+	X_test = mm_x.transform(X_test)
 
 	kf = KFold(n_splits=n_splits, random_state=None, shuffle=False)
 	kf.get_n_splits(X_train)
+
+	#maybe save the train here?
 
 	start = time.time()
 	#create the elm
 	elm   = ELMClassifier(n_hidden=n_hidden, C= features_check[features_set]["C"], activation='relu') # activation = ['relu','tanh','logistic']
 
-	accuracies = [] 
+	accuracies = []
 	losses     = []
 	f1s        = []
 	precisions = []

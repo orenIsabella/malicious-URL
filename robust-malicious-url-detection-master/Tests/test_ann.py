@@ -44,26 +44,26 @@ features_check = {
 	"all": {
 		"features": [1,2,3,4,5,6,7,8,9,10,11,13,15],
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"
 	},
 	"novel": {
 		"features": [10,11,13,15],
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/median_9_2_(75-25))_vt_include.csv"
 	},
 	"hybrid_robust": {
 		"features": [2,6,8,9,10,11,13,15],
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/median_9_2_(75-25))_vt_include.csv"
 	}
 }
-features_to_check = ["base"]
+features_to_check = ["base","base_robust","all","novel","hybrid_robust"]
 
 
 threshold       = 0.5
 learning_rate   = 0.001
 training_epochs = 20000
-degree          = 2
+degree          = 3
 n_splits		= 10
 test_size		= 0.25
 
