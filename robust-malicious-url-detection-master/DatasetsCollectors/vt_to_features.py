@@ -43,7 +43,6 @@ for thresholds_type, thresholds_values in thresholds_lst.items():
 	ratio_tables_stage            = True
 	features_extraction_stage     = True
 	virustotal_features_exist	  = True
-	training_model_stage          = False
 
 	if not features_extraction_stage and (countries_threshold<0 or asns_threshold<0):
 		raise ValueError("You must give thresholds larger than 0")
@@ -81,7 +80,7 @@ for thresholds_type, thresholds_values in thresholds_lst.items():
 		##### list1 for ratio tables, list2 for feature extraction
 		ratio_mal = domains_list_mal.shape[0]*ratio_prec
 		domains_list_mal1    = domains_list_mal.sample(int(ratio_mal))
-		domains_list_ben1    = domains_list_ben.sample(int(ratio_mal*frac_mal*ben_prec))
+		domains_list_ben1    = domains_list_ben.sample(int(ratio_mal*frac_mal*ben_prec), replace=True)
 		domains_list_mal2  	 = domains_list_mal[~domains_list_mal[0].isin(domains_list_mal1[0])]
 		domains_list_ben2  	 = domains_list_ben[~domains_list_ben[0].isin(domains_list_ben1[0])]
 
@@ -121,6 +120,7 @@ for thresholds_type, thresholds_values in thresholds_lst.items():
 		rm_countries = RatioMatrix(df_ratios, 4)
 		rm_asns      = RatioMatrix(df_ratios, 3)
 
+		# print(rm_countries)
 		rm_countries.extract()
 		rm_asns.extract()
 		# rm_countries.to_csv(os.path.join(path, rm_countries_file))
@@ -132,9 +132,10 @@ for thresholds_type, thresholds_values in thresholds_lst.items():
 		##################### END #######################
 		#################################################
 	elif features_extraction_stage:
-		countries_ratios = pd.read_csv(os.path.join(path, rm_countries_file), sep     =';')
-		asns_ratios      = pd.read_csv(os.path.join(path, rm_asns_file), sep          =';')
-		df_features      = pd.read_csv(os.path.join(path, dns_for_features_file), sep =';')
+		print()
+		# countries_ratios = pd.read_csv(os.path.join(path, rm_countries_file), sep     =';')
+		# asns_ratios      = pd.read_csv(os.path.join(path, rm_asns_file), sep          =';')
+		# df_features      = pd.read_csv(os.path.join(path, dns_for_features_file), sep =';')
 
 	if features_extraction_stage:
 		#################################################
@@ -153,8 +154,10 @@ for thresholds_type, thresholds_values in thresholds_lst.items():
 		features_extraction = FeaturesExtraction(df_features, countries_ratios=countries_ratios, asns_ratios=asns_ratios, virustotal=df_virustotal, countries_threshold=countries_threshold, asns_threshold=asns_threshold,domian_idx=0,ips_idx=1,ttls_idx=2,asns_idx=3,countries_idx=4,dates_idx=9,y_idx=10, verbose=1)
 		print('Countries threshold: %d' % features_extraction.countries_threshold)
 		print('ASNs threshold: %d' % features_extraction.asns_threshold)
+		# print(features_extraction)
 		features_extraction.extract()
-		features_extraction.to_csv(os.path.join(path,("../Datasets/features_extractions/%s_%d_%d_(%d-%d)%s.csv" % (thresholds_type,features_extraction.countries_threshold,features_extraction.asns_threshold,int(ratio_prec*100),int(features_prec*100), "_vt_include" if virustotal_features_exist else ""))))
+		# print(features_extraction)
+		# features_extraction.to_csv(os.path.join(path,("../Datasets/features_extractions/%s_%d_%d_(%d-%d)%s.csv" % (thresholds_type,features_extraction.countries_threshold,features_extraction.asns_threshold,int(ratio_prec*100),int(features_prec*100), "_vt_include" if virustotal_features_exist else ""))))
 		df_features = features_extraction.df_extracted.copy()
 		print("Benign")
 		print(df_features[df_features[df_features.columns[y_column_idx]]==0].describe())
