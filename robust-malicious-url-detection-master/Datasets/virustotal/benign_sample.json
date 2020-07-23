@@ -1,3 +1,143 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0e2783a88013dbba723ef8f1f141a98941a3af2e4d87453fff3b4e23e36ca62b
-size 7383
+{
+    "nimkimukhiya.net": {
+        "BitDefender category": "videos",
+        "Forcepoint ThreatSeeker category": "media file download",
+        "categories": [
+            "media file download"
+        ],
+        "detected_downloaded_samples": [],
+        "detected_urls": [],
+        "domain_siblings": [],
+        "resolutions": [
+            {
+                "ip_address": "104.27.142.222",
+                "last_resolved": "2019-06-23 07:43:53"
+            },
+            {
+                "ip_address": "104.27.143.222",
+                "last_resolved": "2019-06-23 07:43:53"
+            }
+        ],
+        "response_code": 1,
+        "subdomains": [
+            "www.nimkimukhiya.net"
+        ],
+        "undetected_downloaded_samples": [],
+        "undetected_urls": [
+            [
+                "http://nimkimukhiya.net/watch-khatra-khatra-khatra-13th-june-2019-full-episode-69-video/",
+                "70ad2f722c56567019fe794f1a5f408c4a36ea6dfd680397a9d070e1300a5a27",
+                0,
+                70,
+                "2019-06-21 07:10:20"
+            ],
+            [
+                "http://nimkimukhiya.net/watch-taarak-mehta-ka-ooltah-chashmah-13th-june-2019-full-episode-2752-video/",
+                "c68d7d350a1e6fb0bd9a530df96c093ab6ab4f6acb62d9c8c0c0b8d7aa9e7592",
+                0,
+                70,
+                "2019-06-19 05:17:11"
+            ],
+            [
+                "https://nimkimukhiya.net/",
+                "ee93c335a154dd534e82803c9655bbc860451e11e49587a13feb2d92015e3739",
+                0,
+                70,
+                "2019-06-12 02:28:11"
+            ]
+        ],
+        "verbose_msg": "Domain found in dataset",
+        "whois": "Domain Name: NIMKIMUKHIYA.NET\nRegistry Domain ID: 2325695047_DOMAIN_NET-VRSN\nRegistrar WHOIS Server: whois.namecheap.com\nRegistrar URL: http://www.namecheap.com\nUpdated Date: 2018-10-25T16:16:12Z\nCreation Date: 2018-10-25T15:30:57Z\nRegistry Expiry Date: 2019-10-25T15:30:57Z\nRegistrar: NameCheap, Inc.\nRegistrar IANA ID: 1068\nRegistrar Abuse Contact Email: abuse@namecheap.com\nRegistrar Abuse Contact Phone: +1.6613102107\nDomain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\nName Server: CARL.NS.CLOUDFLARE.COM\nName Server: NOLA.NS.CLOUDFLARE.COM\nDNSSEC: unsigned\nDomain name: nimkimukhiya.net\nUpdated Date: 2018-10-25T15:30:57.00Z\nCreation Date: 2018-10-25T15:30:57.00Z\nRegistrar Registration Expiration Date: 2019-10-25T15:30:57.00Z\nRegistrar: NAMECHEAP INC\nRegistrant Country: PA\nRegistrant Email: [REDACTED]@whoisguard.com\nAdmin Organization: WhoisGuard, Inc.\nAdmin City: Panama\nAdmin State/Province: Panama\nAdmin Country: PA\nAdmin Email: [REDACTED]@whoisguard.com\nTech Organization: WhoisGuard, Inc.\nTech City: Panama\nTech State/Province: Panama\nTech Country: PA\nTech Email: [REDACTED]@whoisguard.com\nName Server: carl.ns.cloudflare.com\nName Server: nola.ns.cloudflare.com",
+        "whois_timestamp": 1561275833
+    },
+    "rapiboy.com": {
+        "Forcepoint ThreatSeeker category": "uncategorized",
+        "categories": [
+            "uncategorized"
+        ],
+        "detected_urls": [],
+        "domain_siblings": [],
+        "resolutions": [
+            {
+                "ip_address": "104.27.152.91",
+                "last_resolved": "2019-06-22 03:08:10"
+            },
+            {
+                "ip_address": "104.27.153.91",
+                "last_resolved": "2019-06-22 03:08:10"
+            },
+            {
+                "ip_address": "190.210.150.90",
+                "last_resolved": "2019-02-08 10:02:10"
+            },
+            {
+                "ip_address": "205.144.171.125",
+                "last_resolved": "2016-08-11 00:00:00"
+            },
+            {
+                "ip_address": "52.67.153.186",
+                "last_resolved": "2018-07-28 10:07:07"
+            },
+            {
+                "ip_address": "52.67.180.11",
+                "last_resolved": "2017-09-26 00:00:00"
+            },
+            {
+                "ip_address": "52.67.24.209",
+                "last_resolved": "2016-10-06 00:00:00"
+            },
+            {
+                "ip_address": "54.207.48.46",
+                "last_resolved": "2018-06-21 15:26:52"
+            },
+            {
+                "ip_address": "54.207.79.21",
+                "last_resolved": "2018-07-20 12:08:48"
+            },
+            {
+                "ip_address": "54.232.218.71",
+                "last_resolved": "2018-07-20 12:08:47"
+            },
+            {
+                "ip_address": "54.94.174.241",
+                "last_resolved": "2018-06-21 15:26:52"
+            },
+            {
+                "ip_address": "54.94.202.155",
+                "last_resolved": "2019-02-01 10:00:39"
+            },
+            {
+                "ip_address": "54.94.219.66",
+                "last_resolved": "2017-10-07 00:00:00"
+            },
+            {
+                "ip_address": "54.94.220.101",
+                "last_resolved": "2018-07-28 10:07:07"
+            },
+            {
+                "ip_address": "54.94.242.226",
+                "last_resolved": "2019-02-01 10:00:39"
+            },
+            {
+                "ip_address": "54.94.243.155",
+                "last_resolved": "2017-10-07 00:00:00"
+            },
+            {
+                "ip_address": "54.94.251.11",
+                "last_resolved": "2018-08-08 22:07:44"
+            }
+        ],
+        "response_code": 1,
+        "subdomains": [
+            "franquicias.rapiboy.com",
+            "builder.rapiboy.com",
+            "webservices.rapiboy.com",
+            "staging.rapiboy.com",
+            "www.rapiboy.com",
+            "stats.rapiboy.com"
+        ],
+        "verbose_msg": "Domain found in dataset",
+        "whois": "Domain Name: RAPIBOY.COM\nRegistry Domain ID: 2050127598_DOMAIN_COM-VRSN\nRegistrar WHOIS Server: whois.godaddy.com\nRegistrar URL: http://www.godaddy.com\nUpdated Date: 2019-02-05T10:09:10Z\nCreation Date: 2016-08-07T13:45:54Z\nRegistry Expiry Date: 2020-08-07T13:45:54Z\nRegistrar: GoDaddy.com, LLC\nRegistrar IANA ID: 146\nRegistrar Abuse Contact Email: abuse@godaddy.com\nRegistrar Abuse Contact Phone: 480-624-2505\nDomain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited\nDomain Status: clientRenewProhibited https://icann.org/epp#clientRenewProhibited\nDomain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\nDomain Status: clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited\nName Server: BART.NS.CLOUDFLARE.COM\nName Server: DORA.NS.CLOUDFLARE.COM\nDNSSEC: unsigned\nDomain Name: rapiboy.com\nUpdated Date: 2018-08-08T10:45:44Z\nRegistrar Registration Expiration Date: 2020-08-07T13:45:54Z\nRegistrar Abuse Contact Phone: +1.4806242505\nDomain Status: clientTransferProhibited http://www.icann.org/epp#clientTransferProhibited\nDomain Status: clientUpdateProhibited http://www.icann.org/epp#clientUpdateProhibited\nDomain Status: clientRenewProhibited http://www.icann.org/epp#clientRenewProhibited\nDomain Status: clientDeleteProhibited http://www.icann.org/epp#clientDeleteProhibited\nRegistrant Country: AR",
+        "whois_timestamp": 1559881689
+    }
+}
