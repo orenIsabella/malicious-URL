@@ -157,7 +157,7 @@ for thresholds_type, thresholds_values in thresholds_lst.items():
 		# print(features_extraction)
 		features_extraction.extract()
 		# print(features_extraction)
-		# features_extraction.to_csv(os.path.join(path,("../Datasets/features_extractions/%s_%d_%d_(%d-%d)%s.csv" % (thresholds_type,features_extraction.countries_threshold,features_extraction.asns_threshold,int(ratio_prec*100),int(features_prec*100), "_vt_include" if virustotal_features_exist else ""))))
+		features_extraction.to_csv(os.path.join(path,("../Datasets/features_extractions/test/%s_%d_%d_(%d-%d)%s.csv" % (thresholds_type,features_extraction.countries_threshold,features_extraction.asns_threshold,int(ratio_prec*100),int(features_prec*100), "_vt_include2" if virustotal_features_exist else ""))))
 		df_features = features_extraction.df_extracted.copy()
 		print("Benign")
 		print(df_features[df_features[df_features.columns[y_column_idx]]==0].describe())

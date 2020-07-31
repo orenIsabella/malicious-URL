@@ -10,6 +10,7 @@ import requests
 import time
 import json
 import argparse
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-a','--apikey', help='API key for VirusTotal')
@@ -19,16 +20,15 @@ parser.add_argument('-o','--json_out', help='JSON output file data')
 args = parser.parse_args()
 path = os.path.dirname(os.path.abspath(__file__))
 
-api_key    = args.apikey
-csv_in     = args.csv_in
-json_out   = args.json_out
-error_file = 'vt_errors.json'
+api_key    = "89b62770b0861fda0dd038e8b651560b8e638e20b44416edb19ba743388b1479"#args.apikey
+csv_in     = "../Datasets/urls/maliciousURLS2020.csv"#args.csv_in
+json_out   = "../Datasets/urls/jsonTest/a.json"#args.json_out
+error_file = '../Datasets/urls/jsonTest/vt_errors.json'
 
 # vt_url     = 'https://www.virustotal.com/vtapi/v2/url/report'
 vt_url     = 'https://www.virustotal.com/vtapi/v2/domain/report'
 params     = {'apikey': api_key,'domain':'<domain>'}
-
-df           = pd.read_csv(json_out, sep=';', header=None, dtype=str)
+df           = pd.read_csv(csv_in, sep=';', header=None, dtype=str)
 domains_list = pd.DataFrame(df[0].unique())
 
 vt         = {}
@@ -54,10 +54,13 @@ while(i<len_urls):
         remaining = (js['response_code'] == '204')
 
     url              = urls[i]
-
+    print(url)
+    print()
     params['domain'] = url
     response         = requests.get(vt_url, params=params)
+    print(response)
     js               = response.json()
+    print(js)
     if js['response_code'] == '204':
         remaining = True
         continue
