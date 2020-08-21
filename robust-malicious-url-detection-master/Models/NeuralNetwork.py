@@ -114,13 +114,13 @@ class NeuralNetwork:
 		indices = np.arange(self.y.shape[0])
 		self.X_train, self.X_test, self.y_train, self.y_test, self.idx_train, self.idx_test = train_test_split(self.X, self.y, indices, stratify=self.y, test_size=self.test_size, random_state=42)
 
-		sc_x = StandardScaler()
-		self.X_train = sc_x.fit_transform(self.X_train)
-		self.X_test = sc_x.transform(self.X_test)
-
-		mm_x = MinMaxScaler()
-		self.X_train = mm_x.fit_transform(self.X_train)
-		self.X_test = mm_x.transform(self.X_test)
+		# sc_x = StandardScaler()
+		# self.X_train = sc_x.fit_transform(self.X_train)
+		# self.X_test = sc_x.transform(self.X_test)
+		#
+		# mm_x = MinMaxScaler()
+		# self.X_train = mm_x.fit_transform(self.X_train)
+		# self.X_test = mm_x.transform(self.X_test)
 
 		input_dim  = self.X_train.shape[1]
 		self.model = tf.keras.models.Sequential()

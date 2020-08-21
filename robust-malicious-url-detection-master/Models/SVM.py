@@ -77,13 +77,13 @@ class SVM:
 		indices = np.arange(self.y.shape[0])
 		self.X_train, self.X_test, self.y_train, self.y_test, self.idx_train, self.idx_test = train_test_split(self.X, self.y, indices, stratify=self.y, test_size=self.test_size, random_state=42)
 
-		sc_x = StandardScaler()
-		self.X_train = sc_x.fit_transform(self.X_train)
-		self.X_test = sc_x.transform(self.X_test)
-
-		mm_x = MinMaxScaler()
-		self.X_train = mm_x.fit_transform(self.X_train)
-		self.X_test = mm_x.transform(self.X_test)
+		# sc_x = StandardScaler()
+		# self.X_train = sc_x.fit_transform(self.X_train)
+		# self.X_test = sc_x.transform(self.X_test)
+		#
+		# mm_x = MinMaxScaler()
+		# self.X_train = mm_x.fit_transform(self.X_train)
+		# self.X_test = mm_x.transform(self.X_test)
 
 		kf = KFold(n_splits=self.kfolds, random_state=None, shuffle=False)
 		kf.get_n_splits(self.X)
