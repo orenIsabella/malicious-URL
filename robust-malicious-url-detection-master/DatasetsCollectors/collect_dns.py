@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 
 ##############################################
@@ -11,13 +10,8 @@ import datetime
 import schedule
 import threading
 import argparse
-from DatasetsCollectors.Tools.CollectDNS import CollectDNS
-from Tools import *
-import numpy as np
 import pandas as pd
-import time
-import os
-
+from DatasetsCollectors.Tools.CollectDNS import CollectDNS
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-i','--csv_in', help='<Required>CSV input file datatset', required=True)
@@ -64,9 +58,9 @@ collector = CollectDNS(df, output=args.csv_out, domains_tmp='domains_tmp.json', 
 
 print("Number of malicious %d" % df.shape[0])
 
-#schedule.every().day.at("06:00").do(morning,collector)
-#schedule.every().day.at("14:00").do(noon,collector)
-#schedule.every().day.at("22:00").do(evening,collector)
+schedule.every().day.at("06:00").do(morning,collector)
+schedule.every().day.at("14:00").do(noon,collector)
+schedule.every().day.at("22:00").do(evening,collector)
 
 t = threading.Thread(target=run,args=(collector,"Start",))
 t.daemon = True

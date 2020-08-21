@@ -21,7 +21,7 @@ args = parser.parse_args()
 path = os.path.dirname(os.path.abspath(__file__))
 
 api_key    = "89b62770b0861fda0dd038e8b651560b8e638e20b44416edb19ba743388b1479"#args.apikey
-csv_in     = "../Datasets/urls/maliciousURLS2020.csv"#args.csv_in
+csv_in     = "../Datasets/urls/maliciousURLS2020 - Copy.csv"#args.csv_in
 json_out   = "../Datasets/urls/jsonTest/a.json"#args.json_out
 error_file = '../Datasets/urls/jsonTest/vt_errors.json'
 
@@ -54,18 +54,15 @@ while(i<len_urls):
         remaining = (js['response_code'] == '204')
 
     url              = urls[i]
-    print(url)
-    print()
     params['domain'] = url
     response         = requests.get(vt_url, params=params)
-    print(response)
     js               = response.json()
-    print(js)
     if js['response_code'] == '204':
         remaining = True
         continue
     i+=1
     print(i, end=",", flush=True)
+    print(url)
     vt[url] = js
     time.sleep(2)
 
