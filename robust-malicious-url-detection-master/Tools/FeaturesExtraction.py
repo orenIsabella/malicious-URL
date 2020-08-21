@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+   #!/usr/bin/env python
 
 ##############################################
 # Author: Nitay Hason
@@ -19,7 +19,7 @@ from calendar import timegm
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 from ast import literal_eval
-from DatasetsCollectors import vt_to_features
+
 
 #Definition of class constructor, initialization of all variables
 class FeaturesExtraction:

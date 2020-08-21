@@ -20,18 +20,22 @@ class RatioMatrix:
 		dictionary = {}
 		last_index = self.df.shape[1]-1
 		for index,row in self.df.iterrows():
-			arr = literal_eval(row[self.row_number])
-			for item in arr:
-				if item not in dictionary:
-					if row[last_index] == '1':
-						dictionary[item] = {"benign": 0, "malicious": 1}
+			# print(row[self.row_number])
+			try:
+				arr = literal_eval(row[self.row_number])
+				for item in arr:
+					if item not in dictionary:
+						if row[last_index] == '1':
+							dictionary[item] = {"benign": 0, "malicious": 1}
+						else:
+							dictionary[item] = {"benign": 1, "malicious": 0}
 					else:
-						dictionary[item] = {"benign": 1, "malicious": 0}
-				else:
-					if row[last_index] == '1':
-						dictionary[item]["malicious"] += 1
-					else:
-						dictionary[item]["benign"]    += 1
+						if row[last_index] == '1':
+							dictionary[item]["malicious"] += 1
+						else:
+							dictionary[item]["benign"]    += 1
+			except:
+				print()
 
 		self.df_extracted                    = pd.DataFrame.from_dict(dictionary, orient ='index')
 		self.df_extracted["benign_ratio"]    = self.df_extracted["benign"] / (self.df_extracted["benign"]+self.df_extracted["malicious"])
