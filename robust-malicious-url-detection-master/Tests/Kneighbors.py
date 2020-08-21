@@ -29,7 +29,7 @@ features_check = {
 	}
 }
 
-features_to_check = ["base"]
+features_to_check = ["base","base_robust","all","novel","hybrid_robust"]
 
 path               = os.path.dirname(os.path.abspath(__file__))
 features_file_name = "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"

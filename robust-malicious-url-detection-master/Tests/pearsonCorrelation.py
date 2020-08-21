@@ -1,35 +1,84 @@
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
+#!/usr/bin/env python
+
+import itertools
+import numpy as np
 import pandas as pd
-from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
 import os
+import time
+import random
+
+from Models.ELM import ELMClassifier
+
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve, auc
+from sklearn.metrics import log_loss
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import cohen_kappa_score
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
+from scipy.stats import pearsonr
+
 
 features_check = {
 	"base": {
 		"features"     : [1,2,3,4,5,6,7,8,9],
+		"C"            : 0.001,
+		"n_hidden"     : 100,
+		"y_column_idx" : 10,
 		"feature_file" : "../Datasets/features_extractions/base_(all).csv"
 	},
 	"base_robust": {
 		"features"     : [2,6,8,9],
+		"C"            : 0.001,
+		"n_hidden"     : 10,
+		"y_column_idx" : 10,
 		"feature_file" : "../Datasets/features_extractions/base_(all).csv"
 	},
 	"all": {
 		"features"     : [1,2,3,4,5,6,7,8,9,10,11,13,15],
+		"C"            : 50,
+		"n_hidden"     : 150,
+		"y_column_idx" : 17,
 		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
 	},
 	"novel": {
 		"features"     : [10,11,13,15],
+		"C"            : 0.004,
+		"n_hidden"     : 50,
+		"y_column_idx" : 17,
 		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
 	},
 	"hybrid_robust": {
 		"features"     : [2,6,8,9,10,11,13,15],
+		"C"            : 0.01,
+		"n_hidden"     : 100,
+		"y_column_idx" : 17,
 		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
-	}
+	},
+    "PC": {
+        "features"     : [10,11],
+        "feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
+    }
 }
 
-features_to_check = ["base","base_robust","all","novel","hybrid_robust"]
+model_name        = "PC"
+features_to_check = ["PC"]
+
+##################################
+
+
+threshold       = 0.5
+learning_rate   = 0.001
+n_splits		= 10
+test_size		= 0.25
 
 path               = os.path.dirname(os.path.abspath(__file__))
 features_file_name = "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"
@@ -51,28 +100,10 @@ for features_set in features_to_check:
     X = data[a] # Features
     y = data['0'] # Target variable
 
-    # Split dataset into training set and test set
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1) # 75% training and 25% test
+    corr, _ = pearsonr(data[a[0]], data[a[1]])
+    print('Pearsons correlation: %.3f' % corr)
+    # for a in data[a[0]]:
+    #     print(a)
 
-    # Create Decision Tree classifer object
-    clf = DecisionTreeClassifier()
 
-    sc_x = StandardScaler()
-    X_train = sc_x.fit_transform(X_train)
-    X_test = sc_x.transform(X_test)
-
-    mm_x = MinMaxScaler()
-    X_train = mm_x.fit_transform(X_train)
-    X_test = mm_x.transform(X_test)
-
-    # Train Decision Tree Classifer
-    clf = clf.fit(X_train,y_train)
-
-    #Predict the response for test dataset
-    y_pred = clf.predict(X_test)
-
-    # Model Accuracy, how often is the classifier correct?
-    print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
-    print("f1 Score:",metrics.f1_score(y_test, y_pred, average='macro'))
-    print("precision:", metrics.precision_score(y_test,y_pred, average='macro'))
-    print("recall:", metrics.recall_score(y_test,y_pred, average='macro'))
+#print(X[0])

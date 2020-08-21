@@ -52,27 +52,27 @@ features_check = {
 		"C"            : 50,
 		"n_hidden"     : 150,
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/test/median_9_2_(25-75)_vt_include.csv"
 	},
 	"novel": {
 		"features"     : [10,11,13,15],
 		"C"            : 0.004,
 		"n_hidden"     : 50,
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/test/median_9_2_(25-75)_vt_include.csv"
 	},
 	"hybrid_robust": {
 		"features"     : [2,6,8,9,10,11,13,15],
 		"C"            : 0.01,
 		"n_hidden"     : 100,
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/test/median_9_2_(25-75)_vt_include.csv"
 	}
 }
 
 
 model_name        = "elm"
-features_to_check = ["base"]
+features_to_check = ["base","base_robust","all","novel","hybrid_robust"]
 
 threshold       = 0.5
 learning_rate   = 0.001
@@ -112,13 +112,13 @@ for features_set in features_to_check:
 	indices = np.arange(y.shape[0])
 	X_train, X_test, y_train, y_test, idx_train, idx_test = train_test_split(X, y, indices, stratify=y, test_size=test_size, random_state=42)
 
-	sc_x = StandardScaler()
-	X_train = sc_x.fit_transform(X_train)
-	X_test = sc_x.transform(X_test)
-
-	mm_x = MinMaxScaler()
-	X_train = mm_x.fit_transform(X_train)
-	X_test = mm_x.transform(X_test)
+	# sc_x = StandardScaler()
+	# X_train = sc_x.fit_transform(X_train)
+	# X_test = sc_x.transform(X_test)
+	#
+	# mm_x = MinMaxScaler()
+	# X_train = mm_x.fit_transform(X_train)
+	# X_test = mm_x.transform(X_test)
 
 	kf = KFold(n_splits=n_splits, random_state=None, shuffle=False)
 	kf.get_n_splits(X_train)
