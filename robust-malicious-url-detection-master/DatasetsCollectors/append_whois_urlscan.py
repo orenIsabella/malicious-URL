@@ -49,7 +49,7 @@ def fixCountries(asns):
 	return countries
 
 API_KEY        = "6ce22dd8-480b-4007-92ad-3ee9fcfba9fb"#args.apikey
-csv_in         = "../Datasets/urls/URLS.csv"#args.csv_in
+csv_in         = "../Datasets/urls/maliciousURL2020 - Copy.csv"#args.csv_in
 csv_out        = "../Datasets/urls/"#args.csv_out
 dataframe_save = "df_save" if args.dataframe is None else args.dataframe
 
