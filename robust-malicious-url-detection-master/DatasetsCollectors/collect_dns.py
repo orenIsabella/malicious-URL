@@ -14,8 +14,8 @@ import pandas as pd
 from DatasetsCollectors.Tools.CollectDNS import CollectDNS
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-i','--csv_in', help='<Required>CSV input file datatset', required=True)
-parser.add_argument('-o','--csv_out', help='<Required>CSV output file datatset', required=True)
+parser.add_argument('-i','--csv_in', help='<Required>CSV input file datatset')
+parser.add_argument('-o','--csv_out', help='<Required>CSV output file datatset')
 parser.add_argument('-d','--dataframe', help='Dataframe save file')
 parser.add_argument('-l','--log_file', help='Log file')
 
@@ -52,9 +52,15 @@ def evening(collector):
 
 
 args      = parser.parse_args()
-log_file  = "log_file_tmp.log" if args.log_file is None else args.log_file
-df        = pd.read_csv(args.csv_in, sep=";", header=None)
-collector = CollectDNS(df, output=args.csv_out, domains_tmp='domains_tmp.json', log_file=log_file)
+
+csv_in = "../Datasets/urls/maliciousURLS2020.csv"
+csv_out = "../Datasets/features_extractions/test/collectDnsTest.csv"
+df = "../Datasets/features_extractions/test/a.txt"
+log_file = "../Datasets/features_extractions/test/b.txt"
+
+log_file  = "log_file_tmp.log" if log_file is None else log_file
+df        = pd.read_csv(csv_in, sep=";", header=None)
+collector = CollectDNS(df, output=csv_out, domains_tmp='domains_tmp.json', log_file=log_file)
 
 print("Number of malicious %d" % df.shape[0])
 
