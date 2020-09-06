@@ -16,15 +16,16 @@ class RatioMatrix:
 		self.df_extracted = None
 
 	#Extracting data(ratio matrix), which link is benign and which is malicious
+	# assign to each url JSON with the detection
 	def extract(self):
 		dictionary = {}
-		last_index = self.df.shape[1]-1
+		last_index = self.df.shape[1]-1 #last cell in matrix
 		for index,row in self.df.iterrows():
 			# print(row[self.row_number])
 			try:
 				arr = literal_eval(row[self.row_number])
 				for item in arr:
-					if item not in dictionary:
+					if item not in dictionary:#if item is in dictionary it is benign
 						if row[last_index] == '1':
 							dictionary[item] = {"benign": 0, "malicious": 1}
 						else:

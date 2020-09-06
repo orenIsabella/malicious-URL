@@ -34,6 +34,7 @@ class FeaturesExtraction:
 		self.virustotal = virustotal
 
 		if countries_threshold < 0:
+			#calc average in different ways:
 			if countries_threshold == -1:
 				self.countries_threshold = int(self.countries_ratios["total"].median())
 			elif countries_threshold == -2:
@@ -46,6 +47,7 @@ class FeaturesExtraction:
 			self.countries_threshold = countries_threshold
 
 		if asns_threshold < 0:
+			# calc average in different ways:
 			if asns_threshold == -1:
 				self.asns_threshold = int(self.asns_ratios["total"].median())
 			elif asns_threshold == -2:
@@ -112,7 +114,7 @@ class FeaturesExtraction:
 	def feature3(self, str):
 		feature3 = 0
 		str_len  = len(str)
-		chars    = defaultdict(int)
+		chars    = defaultdict(int) #set dictionary with all values set as integers
 		for char in str:
 			chars[char] += 1
 
@@ -252,7 +254,7 @@ class FeaturesExtraction:
 		x=0
 		progress=0
 		print("Start extraction")
-		prec = self.percentage(10, len(self.df.index))
+		prec = self.percentage(10, len(self.df.index)) #show loading precentage
 		for index, row in self.df.iterrows():
 			progress+=1
 			try:
@@ -304,6 +306,7 @@ class FeaturesExtraction:
 						except:
 							feature16_str = 0
 					else:
+						#virus total doesn't work or had an error
 						feature12_str = 0
 						feature13_str = 0
 						feature14_str = 0
