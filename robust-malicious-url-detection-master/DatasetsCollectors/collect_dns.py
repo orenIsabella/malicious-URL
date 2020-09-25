@@ -11,7 +11,7 @@ import schedule
 import threading
 import argparse
 import pandas as pd
-from DatasetsCollectors.Tools.CollectDNS import CollectDNS
+from Tools.CollectDNS import CollectDNS
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-i','--csv_in', help='<Required>CSV input file datatset')
@@ -53,17 +53,16 @@ def evening(collector):
 
 args      = parser.parse_args()
 
-csv_in = "../Datasets/urls/maliciousURLS2020.csv"
-csv_out = "../Datasets/features_extractions/test/collectDnsTest.csv"
-df = "../Datasets/features_extractions/test/a.txt"
-log_file = "../Datasets/features_extractions/test/b.txt"
+csv_in = "D:/Users/Daniel/Projects/malicious-URL/robust-malicious-url-detection-master/Datasets/urls/maliciousURLS2020.csv"
+csv_out = "D:/Users/Daniel/Projects/malicious-URL/robust-malicious-url-detection-master/Datasets/features_extractions/test/collectDnsTest.csv"
+df = "D:/Users/Daniel/Projects/malicious-URL/robust-malicious-url-detection-master/Datasets/features_extractions/test/a.txt"
+log_file = "D:/Users/Daniel/Projects/malicious-URL/robust-malicious-url-detection-master/Datasets/features_extractions/test/b.txt"
 
 log_file  = "log_file_tmp.log" if log_file is None else log_file
 df        = pd.read_csv(csv_in, sep=";", header=None)
 collector = CollectDNS(df, output=csv_out, domains_tmp='domains_tmp.json', log_file=log_file)
 
 print("Number of malicious %d" % df.shape[0])
-
 schedule.every().day.at("06:00").do(morning,collector)
 schedule.every().day.at("14:00").do(noon,collector)
 schedule.every().day.at("22:00").do(evening,collector)
