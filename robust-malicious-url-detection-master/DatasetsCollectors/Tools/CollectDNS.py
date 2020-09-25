@@ -16,7 +16,7 @@ import logging
 import os
 import pandas as pd
 import numpy as np
-from Sniffer import Sniffer
+from Tools.Sniffer import Sniffer
 from scapy.all import DNS, DNSRR
 from time import sleep
 
@@ -87,6 +87,7 @@ class CollectDNS:
 		self.check_sniffing = True
 		while(sniffer.urls_count()>0 and self.check_sniffing):
 			if sniffer.packet_id()>0:
+				print(sniffer.packet_id())
 				packet = sniffer.pop_packet()
 				domain = packet[0]
 				print("Found %s" % domain, flush=True)
