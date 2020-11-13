@@ -142,12 +142,13 @@ for thresholds_type, thresholds_values in thresholds_lst.items():
 		############### Feature extraction ###############
 		#################################################
 		if virustotal_features_exist:
-			df_virustotal 	                        = pd.read_json(os.path.join(path, virustotal_ds))
-			df_virustotal                           = df_virustotal.T
-			na_cert                                 = {"validity":{"not_before":"1970-01-01 12:00:00","not_after":"1970-01-01 12:00:00"},"issuer":{"O":"NA"}}
-			df_virustotal['last_https_certificate'] = df_virustotal['last_https_certificate'].apply(lambda x: na_cert if x != x else x)
-			vt_use_cols                             = ['dns_records','last_https_certificate','resolutions','subdomains']
-			df_virustotal                           = df_virustotal[vt_use_cols]
+			#df_virustotal 	                        = pd.read_json(os.path.join(path, virustotal_ds))
+			#df_virustotal                           = df_virustotal.T
+			#na_cert                                 = {"validity":{"not_before":"1970-01-01 12:00:00","not_after":"1970-01-01 12:00:00"},"issuer":{"O":"NA"}}
+			#df_virustotal['last_https_certificate'] = df_virustotal['last_https_certificate'].apply(lambda x: na_cert if x != x else x)
+			#vt_use_cols                             = ['dns_records','last_https_certificate','resolutions','subdomains']
+			#df_virustotal                           = df_virustotal[vt_use_cols]
+			df_virustotal= None
 		else:
 			df_virustotal = None
 

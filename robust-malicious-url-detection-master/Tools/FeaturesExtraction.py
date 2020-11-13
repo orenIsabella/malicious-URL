@@ -14,6 +14,13 @@ import math
 import datetime
 import scipy.stats
 import time
+import re
+
+
+
+import collections
+
+from scipy.stats import entropy
 
 from calendar import timegm
 from collections import defaultdict
@@ -239,6 +246,54 @@ class FeaturesExtraction:
 		res = self.exist_certificate(validity["not_after"])*(not_after-not_before)
 		return res
 
+	##Shannon entropy calculation
+	def feature18(self, url):
+		pd_series = pd.Series(url.lstrip('https://www.'))
+		counts = pd_series.value_counts()
+		entropy = scipy.stats.entropy(counts)
+
+		return entropy
+
+	##check if the domain name contains the ip
+	def feature19 (self, ips_arr, domain):
+		for ip in ips_arr:
+			if ip in domain:
+				return 1
+		return 0
+
+	#check how many special characters there is in the url
+	def feature20 (self, url):
+		count=0
+		for i in url:
+			if not i.isalnum():
+				count= count+1
+
+		return count
+
+	#ratio between the special characters amount and the entire url
+	def feature21 (self,url):
+		count= self.feature20(url.lstrip('https://www.'))
+		return float (count)/ float(len (url))
+
+	#check if 'http' contains 's'
+	def feature22 (self, url):
+		if url.contains("https//:"):
+			return True
+		else:
+			return False
+
+	#check if there is a token in the url
+	def feature23(self, url):
+		tokens_words = self.getTokens(url)
+		sec_sen_words = ['confirm', 'account', 'banking', 'secure', 'ebayisapi', 'webscr', 'login', 'signin']
+		cnt = 0
+		for ele in sec_sen_words:
+			if (ele in tokens_words):
+				cnt += 1
+		return cnt
+
+	def getTokens(self, url):
+		return re.split('\W+', url)
 
 	def get_epoch(self, time_str):
 		return timegm(time.strptime(time_str, "%Y-%m-%d %H:%M:%S"))
@@ -260,8 +315,15 @@ class FeaturesExtraction:
 			try:
 				ext           = tldextract.extract(row[self.domian_idx])
 				domain        = ext.domain + '.' + ext.suffix
+				print(str(domain))
+				for a in row:
+					url = str(a)
+					break
+
 				ips_arr       = literal_eval(row[self.ips_idx])
+				print("ip arr= " + str(ips_arr))
 				ips_arr		  = list(set(ips_arr))
+
 				ttls_arr      = literal_eval(row[self.ttls_idx])
 				asns_arr      = literal_eval(row[self.asns_idx])
 				countries_arr = literal_eval(row[self.countries_idx])
@@ -292,6 +354,13 @@ class FeaturesExtraction:
 				feature9_str     = relativedelta(datetime.datetime.fromtimestamp(updated_date), datetime.datetime.fromtimestamp(creation_date)).years
 				feature10_str    = self.feature10(countries_arr)
 				feature11_str    = self.feature11(asns_arr)
+				feature18_str    = self.feature18(url)
+				feature19_str = self.feature19(ips_arr, domain)
+				feature20_str = self.feature20(url)
+				feature21_str = self.feature21(url)
+				feature22_str = self.feature22(url)
+				feature23_str = self.feature23(url)
+
 				if self.virustotal is not None:
 					if row[self.domian_idx] in self.virustotal.index:
 						feature12_str = len(self.virustotal.loc[row[self.domian_idx]]["dns_records"]) if self.virustotal.loc[row[self.domian_idx]]["dns_records"] is not np.nan else 0
@@ -312,9 +381,9 @@ class FeaturesExtraction:
 						feature14_str = 0
 						feature15_str = 0
 						feature16_str = 0
-					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature1_str, 2:feature2_str, 3:feature3_str, 4:feature4_str, 5:feature5_str, 6:feature6_str, 7:feature7_str, 8:feature8_str, 9:feature9_str, 10:feature10_str, 11:feature11_str, 12:feature12_str, 13: feature13_str, 14: feature14_str, 15: feature15_str, 16:feature16_str, 17: str(benign_malicious)}
+					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature1_str, 2:feature2_str, 3:feature3_str, 4:feature4_str, 5:feature5_str, 6:feature6_str, 7:feature7_str, 8:feature8_str, 9:feature9_str, 10:feature10_str, 11:feature11_str, 12:feature12_str, 13: feature13_str, 14: feature14_str, 15: feature15_str, 16:feature16_str, 17: str(benign_malicious), 18:feature18_str, 19:feature19_str, 20:feature20_str, 21:feature21_str, 22:feature22_str, 23:feature23_str}
 				else:
-					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature1_str, 2:feature2_str, 3:feature3_str, 4:feature4_str, 5:feature5_str, 6:feature6_str, 7:feature7_str, 8:feature8_str, 9:feature9_str, 10:feature10_str, 11:feature11_str, 12:str(benign_malicious)}
+					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature1_str, 2:feature2_str, 3:feature3_str, 4:feature4_str, 5:feature5_str, 6:feature6_str, 7:feature7_str, 8:feature8_str, 9:feature9_str, 10:feature10_str, 11:feature11_str, 12:str(benign_malicious), 18:feature18_str, 19:feature19_str, 20:feature20_str, 21:feature21_str, 22:feature22_str, 23:feature23_str}
 				self.domains_ttl[domain]["locations"].append(x)
 				x+=1
 			except Exception as exp:

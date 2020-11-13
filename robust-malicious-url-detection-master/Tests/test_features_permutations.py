@@ -17,25 +17,32 @@ features_file_name = "../Datasets/features_extractions/median_9_2_(75-25)_vt_inc
 features_file      = os.path.join(path, features_file_name)
 df_features  = pd.read_csv(features_file)
 
-#features will contain 13 variables that will help us determine if the url is malicious or not.
+#features will contain 20 variables that will help us determine if the url is malicious or not.
 
 features = {
-    "ld"   : 1, # Length of domain
-    "ncc"  : 2, # Number of consecutive characters
-    "ed"   : 3, # Entropy of domain
-    "nia"  : 4, # Number of IP addresses
-    "dgia" : 5, # Distinct geolocations of the IP addresses
-    "atv"  : 6, # Average TTL value
-    "sdt"  : 7, # Standard deviation of TTL
-    "ltd"  : 8, # Life time of domain
-    "atd"  : 9, # Active time of domain
-    "car"  : 10, # Communication ASNs Rank
-    "ccr"  : 11, # Communication Countries Rank
+    "ld"   : 1,    # Length of domain
+    "ncc"  : 2,    # Number of consecutive characters
+    "ed"   : 3,    # Entropy of domain
+    "nia"  : 4,    # Number of IP addresses
+    "dgia" : 5,    # Distinct geolocations of the IP addresses
+    "atv"  : 6,    # Average TTL value
+    "sdt"  : 7,    # Standard deviation of TTL
+    "ltd"  : 8,    # Life time of domain
+    "atd"  : 9,    # Active time of domain
+    "car"  : 10,   # Communication ASNs Rank
+    "ccr"  : 11,   # Communication Countries Rank
     # "ndr"  : 12, # Number of DNS Records
-    "ndc"  : 13, # Number of DNS changes by passive DNS
+    "ndc"  : 13,   # Number of DNS changes by passive DNS
     # "nsd"  : 14, # Number of Subdomains
-    "etsc" : 15, # Expiration Time of SSL Certificate
-    # "scv"  : 16 # SSL Certificate is Valid
+    "etsc" : 15,   # Expiration Time of SSL Certificate
+    # "scv"  : 16  # SSL Certificate is Valid
+    "shne" : 18,   # Shannon entropy of the url
+    "dip"  : 19,   # Ip in the domain
+    "sc"   : 20,   # Special characters in the url
+    "rcs"  : 21,   # Ratio between special characters and the entire url
+    "cns"  : 22,   # 'https' or not
+    "tok"  : 23,   # Check tokens
+
 }
 y_column_idx = 17
 
