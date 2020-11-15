@@ -1,3 +1,4 @@
+
    #!/usr/bin/env python
 
 ##############################################
@@ -248,11 +249,25 @@ class FeaturesExtraction:
 
 	##Shannon entropy calculation
 	def feature18(self, url):
-		pd_series = pd.Series(url.lstrip('https://www.'))
-		counts = pd_series.value_counts()
-		entropy = scipy.stats.entropy(counts)
+		# pd_series = pd.Series(url.lstrip('https://www.'))
+		# print("pd_series: "+str(pd_series))
+		# counts = pd_series.value_counts()
+		# print("counts: "+str(counts))
+		# entropy = scipy.stats.entropy(counts)
+		# print("entropy: "+str(entropy))
+		# return entropy
+		feature18 = 0
+		url.lstrip('https://www.')
+		url_len  = len(url)
+		chars    = defaultdict(int) #set dictionary with all values set as integers
+		for char in url:
+			chars[char] += 1
 
-		return entropy
+		for char in url:
+			pj        = (chars[char]/url_len)
+			feature18 += pj*math.log(pj,2)
+
+		return (-1)*feature18
 
 	##check if the domain name contains the ip
 	def feature19 (self, ips_arr, domain):
@@ -277,10 +292,10 @@ class FeaturesExtraction:
 
 	#check if 'http' contains 's'
 	def feature22 (self, url):
-		if url.contains("https//:"):
-			return True
+		if url.__contains__("https://"):
+			return 1
 		else:
-			return False
+			return 0
 
 	#check if there is a token in the url
 	def feature23(self, url):
@@ -315,13 +330,13 @@ class FeaturesExtraction:
 			try:
 				ext           = tldextract.extract(row[self.domian_idx])
 				domain        = ext.domain + '.' + ext.suffix
-				print(str(domain))
+				# print(str(domain))
 				for a in row:
 					url = str(a)
 					break
 
 				ips_arr       = literal_eval(row[self.ips_idx])
-				print("ip arr= " + str(ips_arr))
+				# print("ip arr= " + str(ips_arr))
 				ips_arr		  = list(set(ips_arr))
 
 				ttls_arr      = literal_eval(row[self.ttls_idx])
@@ -381,9 +396,9 @@ class FeaturesExtraction:
 						feature14_str = 0
 						feature15_str = 0
 						feature16_str = 0
-					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature1_str, 2:feature2_str, 3:feature3_str, 4:feature4_str, 5:feature5_str, 6:feature6_str, 7:feature7_str, 8:feature8_str, 9:feature9_str, 10:feature10_str, 11:feature11_str, 12:feature12_str, 13: feature13_str, 14: feature14_str, 15: feature15_str, 16:feature16_str, 17: str(benign_malicious), 18:feature18_str, 19:feature19_str, 20:feature20_str, 21:feature21_str, 22:feature22_str, 23:feature23_str}
+					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature18_str, 2:feature19_str, 3:feature20_str, 4:feature21_str, 5:feature22_str, 6:feature23_str, 7:feature1_str, 8:feature2_str, 9:feature3_str, 10:feature4_str, 11:feature5_str, 12:feature6_str, 13:feature7_str, 14:feature8_str, 15:feature9_str, 16:feature10_str, 17:feature11_str, 18:feature12_str, 19: feature13_str, 20: feature14_str, 21: feature15_str, 22:feature16_str, 23: str(benign_malicious)}
 				else:
-					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature1_str, 2:feature2_str, 3:feature3_str, 4:feature4_str, 5:feature5_str, 6:feature6_str, 7:feature7_str, 8:feature8_str, 9:feature9_str, 10:feature10_str, 11:feature11_str, 12:str(benign_malicious), 18:feature18_str, 19:feature19_str, 20:feature20_str, 21:feature21_str, 22:feature22_str, 23:feature23_str}
+					self.merged[x]   = {0: str(row[self.domian_idx]), 1:feature18_str, 2:feature19_str, 3:feature20_str, 4:feature21_str, 5:feature22_str, 6:feature23_str, 7:feature1_str, 8:feature2_str, 9:feature3_str, 10:feature4_str, 11:feature5_str, 12:feature6_str, 13:feature7_str, 14:feature8_str, 15:feature9_str, 16:feature10_str, 17:feature11_str, 18:str(benign_malicious)}
 				self.domains_ttl[domain]["locations"].append(x)
 				x+=1
 			except Exception as exp:

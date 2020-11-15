@@ -6,8 +6,10 @@ import pandas as pd
 import os
 import time
 import random
-
-from Models.NeuralNetwork import NeuralNetwork
+import sys
+if '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-mast\Tools' not in sys.path:
+	sys.path.insert(0, '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Models') 
+from NeuralNetwork import NeuralNetwork
 
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
@@ -44,17 +46,17 @@ features_check = {
 	"all": {
 		"features": [1,2,3,4,5,6,7,8,9,10,11,13,15],
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
 	},
 	"novel": {
 		"features": [10,11,13,15],
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(75-25))_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
 	},
 	"hybrid_robust": {
 		"features": [2,6,8,9,10,11,13,15],
 		"y_column_idx" : 17,
-		"feature_file" : "../Datasets/features_extractions/median_9_2_(75-25))_vt_include.csv"
+		"feature_file" : "../Datasets/features_extractions/median_9_2_(25-75)_vt_include.csv"
 	}
 }
 features_to_check = ["base","base_robust","all","novel","hybrid_robust"]

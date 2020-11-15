@@ -4,8 +4,11 @@ import pandas as pd
 import os
 import time
 import random
+import sys
+if '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-mast\Tools' not in sys.path:
+	sys.path.insert(0, '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Models') 
 
-from Models.LogisticRegression import LogisticRegression
+from LogisticRegression import LogisticRegression
 
 # Logistic Regression (LR):
 # is a method for analyzing a dataset in which there are one or more independent 

@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split #importing a function to sp
 import pandas as pd
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
 import os
+import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 
@@ -72,6 +73,6 @@ for features_set in features_to_check:
 
     # Model Accuracy, how often is the classifier correct?
     print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
-    print("f1 Score:", metrics.f1_score(y_test, y_pred, average='macro'))
-    print("precision:", metrics.precision_score(y_test, y_pred, average='macro'))
-    print("recall:", metrics.recall_score(y_test, y_pred, average='macro'))
+    print("f1 Score:", metrics.f1_score(y_test, y_pred, average='macro', labels=np.unique(y_pred)))
+    print("precision:", metrics.precision_score(y_test, y_pred, average='macro', labels=np.unique(y_pred)))
+    print("recall:", metrics.recall_score(y_test, y_pred, average='macro', labels=np.unique(y_pred)))

@@ -4,8 +4,10 @@ import pandas as pd
 import sys, os
 import time
 import random
+if '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-mast\Tools' not in sys.path:
+	sys.path.insert(0, '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Models') 
 
-from Models.SVM import SVM
+from SVM import SVM
 
 # Support-Vector Machine (SVM):
 #  is a learning algorithm that constructs a high dimensional hyperplane used 

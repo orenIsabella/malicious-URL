@@ -11,9 +11,14 @@ import pandas as pd
 import sys, os
 import time
 import random
+if '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-mast/Models' not in sys.path:
+	sys.path.insert(0, '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Models') 
 
-from Tools.FeaturesExtraction import FeaturesExtraction
-from Models.NeuralNetwork import NeuralNetwork
+if '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-mast/Tools' not in sys.path:
+	sys.path.insert(0, '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Tools') 
+
+from FeaturesExtraction import FeaturesExtraction
+from NeuralNetwork import NeuralNetwork
 from matplotlib.ticker import FuncFormatter
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -28,22 +33,30 @@ def to_percent(y, position):
 
 
 features = {
-	1 : "(a) Length of domain",
-	2 : "(b) * Number of consecutive characters",
-	3 : "(c) Entropy of domain",
-	4 : "(d) Number of IP addresses",
-	5 : "(e) Distinct geolocations of the IP addresses",
-	6 : "(f) * Mean TTL value",
-	7 : "(g) Standard deviation of TTL",
-	8 : "(h) * Life time of domain",
-	9 : "(i) * Active time of domain",
-	10: "(j) Communication Countries Rank",
-	11: "(k) Communication ASNs Rank",
-	12: "Number of DNS Records",
-	13: "(l) Number of DNS changes by passive DNS",
-	14: "Number of Subdomains",
-	15: "(m) Expiration Time of SSL Certificate",
-	16: "SSL Certificate is Valid"
+	1: "(a) Shannon entropy of the url",
+    2: "(b) Ip in the domain",
+    3: "(c) * Special characters in the url",
+    4: "(d) Ratio between special characters and the entire url",
+    5: "(e) 'https' or not",
+    6: "(f) * Check tokens",
+	7 : "Length of domain",
+	8 : "* Number of consecutive characters",
+	9 : "Entropy of domain",
+	10 : "Number of IP addresses",
+	11 : "Distinct geolocations of the IP addresses",
+	12 : "* Mean TTL value",
+	13 : "(g) Standard deviation of TTL",
+	14 : "(h) * Life time of domain",
+	15 : "(i) * Active time of domain",
+	16: "Communication Countries Rank",
+	17: "Communication ASNs Rank",
+	18: "Number of DNS Records",
+	19: "Number of DNS changes by passive DNS",
+	20: "Number of Subdomains",
+	21: "(m) Expiration Time of SSL Certificate",
+	22: "SSL Certificate is Valid",
+	23: "f",
+	
 }
 
 # y_column_idx   = 17 # Label column index
@@ -61,22 +74,22 @@ features_check = {  # Feautres sets, include manipulation options
 		"feature_file"    : "../Datasets/features_extractions/base_(all).csv"
 	},
 	"all": {
-		"features"        : [1,2,3,4,5,6,7,8,9,10,11,13,15],
+		"features"        : [1,2,3,4,5,6,7,8,9,10,11,13,15,18,19,20,21,22,23],
 		"y_column_idx"    : 17,
 		"change_features" : [[0,list(np.arange(6,30,1))],[1,list(np.array(np.arange(1.,10.,1.))[::-1])],[2,list(np.arange(2.0,15.25,0.25))],[3,list(np.arange(1.,31.0,1.0))],[4,list(np.arange(1.,11.,1))],[5,list(np.arange(0,60001,10000))],[6,list(np.arange(0,60001,10000))],[7,list(np.arange(1,21,1))],[8,list(np.arange(0,21,1))],[9,list(np.arange(0,4051,90))],[10,list(np.arange(0,720001,3000))],[11,list(np.arange(0,100,2))],[12,list(np.arange(0,15810000,100000))]],
-		"feature_file"    : "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"
+		"feature_file"    : "/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Datasets/features_extractions/test/median_9_2_(25-75)_vt_include2.csv"
 	},
 	"novel": {
 		"features"        : [10,11,13,15],
 		"y_column_idx"    : 17,
 		"change_features" : [[0,list(np.arange(0,4051,90))],[1,list(np.arange(0,720001,3000))],[2,list(np.arange(0,100,2))],[3,list(np.arange(0,15810000,100000))]],
-		"feature_file"    : "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"
+		"feature_file"    : "/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Datasets/features_extractions/test/median_9_2_(25-75)_vt_include2.csv"
 	},
 	"robust": {
 		"features"        : [2,6,8,9,10,11,13,15],
 		"y_column_idx"    : 17,
 		"change_features" : [[0,list(np.array(np.arange(1.,10.,1.))[::-1])],[1,list(np.arange(0,60001,10000))],[2,list(np.arange(1,21,1))],[3,list(np.arange(0,21,1))],[4,list(np.arange(0,4051,90))],[5,list(np.arange(0,720001,3000))],[6,list(np.arange(0,100,2))],[7,list(np.arange(0,15810000,100000))]],
-		"feature_file"    : "../Datasets/features_extractions/median_9_2_(75-25)_vt_include.csv"
+		"feature_file"    : "/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Datasets/features_extractions/test/median_9_2_(25-75)_vt_include2.csv"
 	}
 }
 

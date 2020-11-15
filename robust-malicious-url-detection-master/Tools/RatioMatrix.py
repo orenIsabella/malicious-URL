@@ -26,6 +26,7 @@ class RatioMatrix:
 				arr = literal_eval(row[self.row_number])
 				for item in arr:
 					if item not in dictionary:#if item is in dictionary it is benign
+						#print("last index: "+row[last_index])
 						if row[last_index] == '1':
 							dictionary[item] = {"benign": 0, "malicious": 1}
 						else:

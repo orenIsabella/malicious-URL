@@ -6,8 +6,11 @@ import pandas as pd
 import os
 import time
 import random
+import sys
+if '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-mast/Models' not in sys.path:
+	sys.path.insert(0, '/home/izabella/Desktop/malicious-URL-master/robust-malicious-url-detection-master/Models') 
 
-from Models.ELM import ELMClassifier
+import ELM as ELM
 
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
@@ -127,7 +130,7 @@ for features_set in features_to_check:
 
 	start = time.time()
 	#create the elm
-	elm   = ELMClassifier(n_hidden=n_hidden, C= features_check[features_set]["C"], activation='relu') # activation = ['relu','tanh','logistic']
+	elm   = ELM.ELM(n_hidden=n_hidden, C= features_check[features_set]["C"], activation='relu') # activation = ['relu','tanh','logistic']
 
 	accuracies = []
 	losses     = []
